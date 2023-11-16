@@ -1,0 +1,25 @@
+---
+- name: Create Nginx Deployment
+  hosts: localhost  # Ansible doesn't need a target host for Kubernetes tasks
+  tasks:
+    - name: Create Nginx Deployment
+      k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: nginx-deployment
+          spec:
+            replicas: 3  # Define desired number of replicas
+            selector:
+              matchLabels:
+                app: mynginx
+            template:
+              metadata:
+                labels:
+                  app: mynginx
+              spec:
+                containers:
+                  - name: mynginxcontainer
+                    image: markdocker77/mccustom-nginx:latest
