@@ -1,26 +1,29 @@
-- name: Set Kubernetes Context
-  kubernetes.core.k8s_auth:
-    name: "MCeks"  # Replace with the context name from your kubeconfig file
-    kubeconfig: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
+- name: Deploy Nginx to Kubernetes
+  hosts: localhost
+  tasks:
+    - name: Set Kubernetes Context
+      kubernetes.core.k8s_auth:
+        name: "MCeks"  # Replace with the context name from your kubeconfig file
+        kubeconfig: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
 
-- name: Create Nginx Deployment
-  kubernetes.core.k8s:
-    state: present
-    definition:
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: nginx-deployment
-      spec:
-        replicas: 2  # Set the desired number of replicas
-        selector:
-          matchLabels:
-            app: mynginx
-        template:
+    - name: Create Nginx Deployment
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
           metadata:
-            labels:
-              app: mynginx
+            name: nginx-deployment
           spec:
-            containers:
-              - name: mynginxcontainer
-                image: markdocker77/mccustom-nginx:latest
+            replicas: 2  # Set the desired number of replicas
+            selector:
+              matchLabels:
+                app: mynginx
+            template:
+              metadata:
+                labels:
+                  app: mynginx
+              spec:
+                containers:
+                  - name: mynginxcontainer
+                    image: markdocker77/mccustom-nginx:latest
