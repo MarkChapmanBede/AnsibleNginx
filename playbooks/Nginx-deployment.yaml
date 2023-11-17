@@ -1,7 +1,12 @@
 ---
-- name: Create Nginx Deployment
-  hosts: localhost  # Ansible doesn't need a target host for Kubernetes tasks
+- name: Deploy Nginx to Kubernetes
+  hosts: localhost
   tasks:
+    - name: Set Kubernetes Context
+      k8s_config:
+        name: "arn:aws:eks:us-west-2:173278684542:cluster/MCeks"  # Replace with the context name from your kubeconfig file
+        path: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
+
     - name: Create Nginx Deployment
       k8s:
         state: present
@@ -11,7 +16,7 @@
           metadata:
             name: nginx-deployment
           spec:
-            replicas: 2  # Define desired number of replicas
+            replicas: 2  # Set the desired number of replicas
             selector:
               matchLabels:
                 app: mynginx
