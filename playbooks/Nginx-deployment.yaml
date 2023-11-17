@@ -1,13 +1,15 @@
+---
 - name: Deploy Nginx to Kubernetes
   hosts: localhost
+  gather_facts: no  # Disable gathering facts
+
   tasks:
     - name: Set Kubernetes Context
-      kubernetes.core.k8s_auth:
-        name: "MCeks"  # Replace with the context name from your kubeconfig file
+      community.kubernetes.k8s_auth:
         kubeconfig: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
 
     - name: Create Nginx Deployment
-      kubernetes.core.k8s:
+      community.kubernetes.k8s:
         state: present
         definition:
           apiVersion: apps/v1
