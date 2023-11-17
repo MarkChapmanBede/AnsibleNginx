@@ -4,7 +4,7 @@
   tasks:
     - name: Set Kubernetes Context
       k8s_config:
-        name: "arn:aws:eks:us-west-2:173278684542:cluster/MCeks"  # Replace with the context name from your kubeconfig file
+        name: "cluster/MCeks"  # Replace with the context name from your kubeconfig file
         path: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
 
     - name: Create Nginx Deployment
