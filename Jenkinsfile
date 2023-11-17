@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Run the Ansible playbook to deploy Nginx
-                    sh 'ansible-playbook /playbooks/Nginx-deployment.yaml'
+                    sh 'ansible-playbook /var/lib/jenkins/workspace/Ansible/playbooks/Nginx-deployment.yaml'
                 }
             }
         }
