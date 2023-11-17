@@ -1,15 +1,19 @@
 ---
 - name: Deploy Nginx to Kubernetes
   hosts: localhost
-  gather_facts: no  # Disable gathering facts
+  gather_facts: no
 
   tasks:
     - name: Set Kubernetes Context
-      community.kubernetes.k8s_auth:
-        kubeconfig: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
+      ansible.builtin.import_role:
+        name: community.kubernetes.k8s_auth
+      vars:
+        kubeconfig: "/home/ubuntu/.kube/config.yaml"
 
     - name: Create Nginx Deployment
-      community.kubernetes.k8s:
+      ansible.builtin.import_role:
+        name: community.kubernetes.k8s
+      vars:
         state: present
         definition:
           apiVersion: apps/v1
@@ -17,7 +21,7 @@
           metadata:
             name: nginx-deployment
           spec:
-            replicas: 2  # Set the desired number of replicas
+            replicas: 2
             selector:
               matchLabels:
                 app: mynginx
