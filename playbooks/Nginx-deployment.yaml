@@ -1,14 +1,13 @@
----
 - name: Deploy Nginx to Kubernetes
   hosts: localhost
   tasks:
     - name: Set Kubernetes Context
-      k8s_config:
+      community.kubernetes.k8s_auth:
         name: "MCeks"  # Replace with the context name from your kubeconfig file
-        path: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
+        kubeconfig: "/home/ubuntu/.kube/config.yaml"  # Path to your kubeconfig file
 
     - name: Create Nginx Deployment
-      k8s:
+      community.kubernetes.k8s:
         state: present
         definition:
           apiVersion: apps/v1
