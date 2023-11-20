@@ -3,6 +3,8 @@
   hosts: localhost
   gather_facts: no
   connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python3  # Specify Python 3 interpreter
   tasks:
     - name: Debug Inventory Hostname
       debug:
