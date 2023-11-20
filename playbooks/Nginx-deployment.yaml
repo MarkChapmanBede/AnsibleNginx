@@ -10,7 +10,7 @@
 
     - name: Create Nginx Deployment
       kubernetes.core.k8s:
-        kubeconfig: "/home/ubuntu/.kube/config"
+        kubeconfig: "/var/lib/jenkins/workspace/config"
         state: present
         definition:
           apiVersion: apps/v1
