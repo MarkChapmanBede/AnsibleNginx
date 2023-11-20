@@ -4,6 +4,10 @@
   gather_facts: no
   connection: local  # Specify the local connection method
   tasks:
+    - name: Debug Inventory Hostname
+      debug:
+        var: inventory_hostname
+
     - name: Set Kubernetes Context
       kubernetes.core.k8s_auth:
         name: "MCeks"  # Replace with the context name from your kubeconfig file
