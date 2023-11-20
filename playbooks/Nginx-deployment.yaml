@@ -9,7 +9,6 @@
         var: inventory_hostname
 
     - name: Set Kubernetes Context
-      hosts: localhost  # Explicitly set hosts to localhost for this task
       kubernetes.core.k8s_auth:
         name: "MCeks"  # Replace with the context name from your kubeconfig file
         kubeconfig: "/home/ubuntu/.kube/config"  # Path to your kubeconfig file
