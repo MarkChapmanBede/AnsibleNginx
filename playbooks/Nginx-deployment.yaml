@@ -4,7 +4,7 @@
   gather_facts: no
   connection: local
   vars:
-    ansible_python_interpreter: /usr/bin/python3  # Specify Python 3 interpreter
+    ansible_python_interpreter: /usr/bin/python3 
   tasks:
     - name: Debug Inventory Hostname
       debug:
@@ -19,7 +19,7 @@
           kind: Deployment
           metadata:
             name: nginx-deployment
-            namespace: default  # Specify the namespace here
+            namespace: default
           spec:
             replicas: 1
             selector:
