@@ -8,20 +8,18 @@
       debug:
         var: inventory_hostname
 
-    - name: Set Kubernetes Context
-      kubernetes.core.k8s_auth:
-        kubeconfig: "/home/ubuntu/.kube/config"
-
     - name: Create Nginx Deployment
       kubernetes.core.k8s:
+        kubeconfig: "/home/ubuntu/.kube/config"
         state: present
         definition:
           apiVersion: apps/v1
           kind: Deployment
           metadata:
             name: nginx-deployment
+            namespace: default  # Specify the namespace here
           spec:
-            replicas: 2
+            replicas: 1
             selector:
               matchLabels:
                 app: mynginx
