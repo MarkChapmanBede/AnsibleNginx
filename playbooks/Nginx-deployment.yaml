@@ -2,7 +2,7 @@
 - name: Deploy Nginx to Kubernetes
   hosts: localhost
   gather_facts: no
-  connection: local  # Specify the local connection method
+  connection: local
   tasks:
     - name: Debug Inventory Hostname
       debug:
@@ -10,8 +10,7 @@
 
     - name: Set Kubernetes Context
       kubernetes.core.k8s_auth:
-        name: "MCeks"  # Replace with the context name from your kubeconfig file
-        kubeconfig: "/home/ubuntu/.kube/config"  # Path to your kubeconfig file
+        kubeconfig: "/home/ubuntu/.kube/config"
 
     - name: Create Nginx Deployment
       kubernetes.core.k8s:
@@ -22,7 +21,7 @@
           metadata:
             name: nginx-deployment
           spec:
-            replicas: 2  # Set the desired number of replicas
+            replicas: 2
             selector:
               matchLabels:
                 app: mynginx
