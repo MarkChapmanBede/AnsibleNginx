@@ -1,7 +1,8 @@
 ---
 - name: Deploy Nginx to Kubernetes
   hosts: localhost
-  gather_facts: no  # Disable gathering facts for localhost
+  gather_facts: no
+  connection: local  # Specify the local connection method
   tasks:
     - name: Set Kubernetes Context
       kubernetes.core.k8s_auth:
