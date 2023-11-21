@@ -11,8 +11,17 @@ pipeline {
                     // Specify the absolute path to the playbook
                     def playbookPath = '/var/lib/jenkins/workspace/Ansible/playbooks/Nginx-deployment.yaml'
 
-                    // Run the Ansible playbook with the Vault password
-                    sh "ansible-playbook $playbookPath --vault-password-file=<(echo $VAULT_PASS)"
+                    // Write the Vault password to a temporary file
+                    def vaultPassFile = 'vault_pass.txt'
+                    writeFile file: vaultPassFile, text: env.VAULT_PASS
+
+                    try {
+                        // Run the Ansible playbook using the temporary file for the Vault password
+                        sh "ansible-playbook ${playbookPath} --vault-password-file ${vaultPassFile}"
+                    } finally {
+                        // Clean up the temporary file
+                        sh "rm -f ${vaultPassFile}"
+                    }
                 }
             }
         }
