@@ -12,7 +12,7 @@
 
     - name: Create Nginx Deployment
       kubernetes.core.k8s:
-        kubeconfig: "/var/lib/jenkins/workspace/config"
+        kubeconfig: "/var/lib/jenkins/workspace/config"  # Now Encrypted
         state: present
         definition:
           apiVersion: apps/v1
