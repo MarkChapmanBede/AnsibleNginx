@@ -25,5 +25,18 @@ pipeline {
                 }
             }
         }
+        // Deploying Prometheus
+        stage('Deploy Prometheus') {
+            steps {
+                script {
+                    // Add Prometheus Helm repository
+                    sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
+                    sh 'helm repo update'
+
+                    // Install or upgrade Prometheus
+                    sh 'helm upgrade --install prometheus prometheus-community/prometheus'
+                }
+            }
+        }
     }
 }
