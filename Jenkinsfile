@@ -4,7 +4,7 @@ pipeline {
         // Define the Vault password as an environment variable using the credential ID 'KubeConf'
         VAULT_PASS = credentials('KubeConf')
         // Set the path to your kubeconfig file on the Jenkins server
-        KUBECONFIG_PATH = '/path/to/your/kubeconfig'
+        KUBECONFIG_PATH = '/home/ubuntu/.kube/config'
     }
     stages {
         stage('Deploy Nginx') {
