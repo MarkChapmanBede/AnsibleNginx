@@ -3,8 +3,8 @@ pipeline {
     environment {
         // Define the Vault password as an environment variable using the credential ID 'KubeConf'
         VAULT_PASS = credentials('KubeConf')
-        // Assuming 'KUBECONFIG_FILE' is the ID of the kubeconfig file stored in Jenkins credentials
-        KUBECONFIG_FILE = credentials('KUBECONFIG_FILE')
+        // Set the path to your kubeconfig file on the Jenkins server
+        KUBECONFIG_PATH = '/path/to/your/kubeconfig'
     }
     stages {
         stage('Deploy Nginx') {
@@ -34,17 +34,8 @@ pipeline {
                     sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
                     sh 'helm repo update'
 
-                    // Write kubeconfig to a temporary file
-                    def kubeconfigFile = 'kubeconfig'
-                    writeFile file: kubeconfigFile, text: env.KUBECONFIG_FILE
-
-                    try {
-                        // Install or upgrade Prometheus using the kubeconfig file
-                        sh "KUBECONFIG=${kubeconfigFile} helm upgrade --install prometheus prometheus-community/prometheus"
-                    } finally {
-                        // Clean up the kubeconfig file
-                        sh "rm -f ${kubeconfigFile}"
-                    }
+                    // Install or upgrade Prometheus using the kubeconfig file
+                    sh "KUBECONFIG=${KUBECONFIG_PATH} helm upgrade --install prometheus prometheus-community/prometheus"
                 }
             }
         }
