@@ -27,7 +27,6 @@ pipeline {
                 }
             }
         }
-        // Deploying Prometheus
         stage('Deploy Prometheus') {
             steps {
                 script {
@@ -37,4 +36,17 @@ pipeline {
 
                     // Write kubeconfig to a temporary file
                     def kubeconfigFile = 'kubeconfig'
-                
+                    writeFile file: kubeconfigFile, text: env.KUBECONFIG_FILE
+
+                    try {
+                        // Install or upgrade Prometheus using the kubeconfig file
+                        sh "KUBECONFIG=${kubeconfigFile} helm upgrade --install prometheus prometheus-community/prometheus"
+                    } finally {
+                        // Clean up the kubeconfig file
+                        sh "rm -f ${kubeconfigFile}"
+                    }
+                }
+            }
+        }
+    }
+}
